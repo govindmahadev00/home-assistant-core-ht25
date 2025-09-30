@@ -1405,17 +1405,13 @@ async def help_test_encoding_subscribable_topics(
         init_payload_value,
     ) -> Any:
         state = hass.states.get(entity_id)
-
         if init_payload_value:
             # Sometimes a device needs to have an initialization pay load, e.g. to switch the device on.
             async_fire_mqtt_message(hass, init_payload_topic, init_payload_value)
             await hass.async_block_till_done()
-
         state = hass.states.get(entity_id)
-
         async_fire_mqtt_message(hass, topic, encoded_value)
         await hass.async_block_till_done()
-
         state = hass.states.get(entity_id)
         assert state is not None
 
